@@ -1,0 +1,161 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+// Function prototypes
+void findAvg(const int grade[][4], double ave[], const int N, const int M);
+int findMin(const int[][4], const int, const int);
+int findMax(const int[][4], const int, const int);
+void assignGrade(const double avg[], char grade[], const int sMax );
+void createGraph(const char grade[], const int);
+
+int main()
+{
+    const int sMax = 24;
+    const int eMax = 4;
+    int exam[sMax][eMax] = {0};
+    double avg[sMax] = {0};
+    char gradeLeter[sMax] = {'F'};
+    int min, max;
+
+    srand(time(0));
+
+    for (int row = 0; row < sMax; row++)
+    {
+        for (int column = 0; column < eMax; column++)
+        {
+            exam[row][column] = 30 + rand() % 71;
+        }
+    }
+
+    findAvg(exam, avg, sMax, eMax);
+    assignGrade(avg, gradeLeter, sMax);
+
+    cout << "The ENG 30 grades are: " << endl;
+    cout << endl;
+    cout << setw(20) << "Exam 1" << setw(10) << "Exam 2" << setw(10) << "Exam 3" << setw(10) << "Exam 4" << setw(10) << " Average" << setw(8) << "Grade " << endl;
+
+    for (int row = 0; row < sMax; row++)
+    {
+        cout << "Student " << setw(2) << row + 1;
+        for (int column = 0; column < eMax; column++)
+        {
+            cout << setw(10) << exam[row][column];
+        }
+        cout << setw(10) << setprecision(2) << fixed << avg[row] <<  setw(7) << gradeLeter[row] << endl;
+    }
+
+    srand(time(0));
+
+    min = findMin(exam, sMax, eMax);
+    max = findMax(exam, sMax, eMax);
+    
+
+    cout << endl;
+    cout << "The lowest grade is " << min << endl;
+    cout << "The highest grade is " << max << endl;
+   
+    createGraph(gradeLeter, sMax);
+
+    return 0;
+}
+
+// Functions
+void findAvg(const int grade[][4], double ave[], const int N, const int M)
+{
+    for (int i = 0; i < N; i++)
+    {
+        double total = 0;
+        for (int j = 0; j < M; j++)
+        {
+            total += grade[i][j];
+        }
+        ave[i] = total / 4.0;
+    }
+};
+
+int findMin(const int grade[][4], const int N, const int M)
+{
+    int min = 100;
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < M; j++)
+        {
+            if (grade[i][j] < min)
+            {
+                min = grade[i][j];
+            }
+        }
+    }
+    return min;
+}
+
+int findMax(const int grade[][4], const int N, const int M)
+{
+    int max = 0;
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < M; j++)
+        {
+            if (grade[i][j] > max)
+            {
+                max = grade[i][j];
+            }
+        }
+    }
+    return max;
+}
+
+void assignGrade(const double avg[], char grade[], const int sMax )
+{
+    for (int i = 0; i < sMax; i++)
+    {
+        if (avg[i] > 89.5)
+        {
+            grade[i] = 'A';
+            
+        } else if ( avg[i] > 79.5)
+        {
+            grade[i] = 'B';
+            
+        }else if (avg[i] > 69.5)
+        {
+            grade[i] = 'C';
+            
+        } else if (grade[i] > 59.9)
+        {
+            grade[i] = 'D';
+            
+        } else 
+        {
+            grade[i] = 'F';
+            
+        } 
+    }
+}
+
+void createGraph(const char grade[], const int N)
+{
+    int letterCounter[5] = {0};
+    char letter[5] = {'A', 'B', 'C', 'D', 'F'};
+    
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j <  N; j++)
+        {
+            if (grade[j] == letter[i])
+               letterCounter[i]++;
+        } 
+    }
+    cout << "Overall grade distribution: " << endl; 
+    for (int i =0; i < 5; i++)
+    {
+        cout << setw(3) << letter[i] << " | ";
+        for (int j = 0; j < letterCounter[i]; j++)
+        {
+            cout << "*" ;
+        }
+        cout << endl; 
+    }
+}
