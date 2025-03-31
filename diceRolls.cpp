@@ -9,21 +9,24 @@ const int SIZE = 11;
 
 //Function Prototypes
 void findTotalRolls(int dice1, int dice2, int arrayName[]);
-void findActualChance(double arrayName[], double arrayName2[]); // actual probability = desired outcome/ probably outcome
+void findExpectedChance(double arrayName[], double arrayName2[]); // expected probability = desired outcome/ probably outcome
+void findActualChance(double arrayName[], int arrayName2[]);
 
 int main()
 {
     int diceSum[SIZE] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     int diceRolls[SIZE] = {0};
-    double expectedChance[SIZE] = {2.778, 5.556, 8.333, 11.111, 13.889, 16.667, 13.889, 11.111, 8.333, 5.556, 2.778};
-    double actualChance[SIZE] = {0};
-    double desired[SIZE] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0}; // total number of ways each sum is possbile
+    double expectedChance[SIZE] = {0.0};
+    double actualChance[SIZE] = {0.0};
+    double expectedSum[SIZE] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0}; // total number of ways each sum is possbile
     int dice1, dice2;
 
-    findTotalRolls(dice1, dice2, diceRolls);
-    findActualChance(actualChance, desired);
-
     cout << setprecision(3) << fixed;
+
+    findTotalRolls(dice1, dice2, diceRolls);
+    findExpectedChance(expectedChance, expectedSum);
+    findActualChance(actualChance, diceRolls);
+
     cout << setw(3) << "SUM" << setw(10) << "TOTAL" << setw(10) << "EXPECTED" << setw(10) << "ACTUAL" << endl; 
     for (int i = 0; i < SIZE; i++)
     {
@@ -97,11 +100,24 @@ void findTotalRolls(int dice1, int dice2, int arrayName[])
     }
 };
 
-void findActualChance(double arrayName[], double arrayName2[])
+void findExpectedChance(double arrayName[], double arrayName2[])
 {
-    //actual chance = desired outcome/ probable outcome
+    //expected chance = desired outcome/ probable outcome
     for (int i = 0; i < SIZE ; i++)
     {
         arrayName[i] = (arrayName2[i] / 36) * 100;
+    }
+};
+
+void findActualChance(double arrayName[], int arrayName2[])
+{
+    for (int i = 0; i < SIZE ; i++)
+    {
+        // had to use staic cast since I wanted to use two int's and store them as a double. 
+        //division is performed as floating-point division. 
+        //This can be done by explicitly casting one of the operands to a double.
+        arrayName[i] = (static_cast<double>(arrayName2[i]) / ROLLS) * 100 ; 
+
+        //arrayName[i] = (arrayName2[i] / ROLLS) * 100 ; originally wasnt working so output was 0.000
     }
 };
