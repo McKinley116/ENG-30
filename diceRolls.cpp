@@ -9,7 +9,7 @@ const int SIZE = 11;
 
 //Function Prototypes
 void findTotalRolls(int dice1, int dice2, int arrayName[]);
-void findExpectedChance(double arrayName[], double arrayName2[]); // expected probability = desired outcome/ probably outcome
+void findExpectedChance(double arrayName[], int arrayName2[]); // expected probability = desired outcome/ probably outcome
 void findActualChance(double arrayName[], int arrayName2[]);
 
 int main()
@@ -18,7 +18,7 @@ int main()
     int diceRolls[SIZE] = {0};
     double expectedChance[SIZE] = {0.0};
     double actualChance[SIZE] = {0.0};
-    double expectedSum[SIZE] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0}; // total number of ways each sum is possbile
+    int expectedSum[SIZE] = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1}; // total number of ways each sum is possbile
     int dice1, dice2;
 
     cout << setprecision(3) << fixed;
@@ -100,12 +100,12 @@ void findTotalRolls(int dice1, int dice2, int arrayName[])
     }
 };
 
-void findExpectedChance(double arrayName[], double arrayName2[])
+void findExpectedChance(double arrayName[], int arrayName2[])
 {
     //expected chance = desired outcome/ probable outcome
     for (int i = 0; i < SIZE ; i++)
     {
-        arrayName[i] = (arrayName2[i] / 36) * 100;
+        arrayName[i] = (static_cast<double>(arrayName2[i]) / 36) * 100; // casted as a double to keep dataq types consistant 
     }
 };
 
