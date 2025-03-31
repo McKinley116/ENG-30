@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 using namespace std;
 
 //Global Variables
@@ -8,19 +9,25 @@ const int SIZE = 11;
 
 //Function Prototypes
 void findTotalRolls(int dice1, int dice2, int arrayName[]);
+void findActualChance(double arrayName[], double arrayName2[]); // actual probability = desired outcome/ probably outcome
 
 int main()
 {
     int diceSum[SIZE] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     int diceRolls[SIZE] = {0};
+    double expectedChance[SIZE] = {2.778, 5.556, 8.333, 11.111, 13.889, 16.667, 13.889, 11.111, 8.333, 5.556, 2.778};
+    double actualChance[SIZE] = {0};
+    double desired[SIZE] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0}; // total number of ways each sum is possbile
     int dice1, dice2;
 
     findTotalRolls(dice1, dice2, diceRolls);
+    findActualChance(actualChance, desired);
 
-    cout << setw(3) << "SUM" << setw(10) << "TOTAL"  << endl; 
+    cout << setprecision(3) << fixed;
+    cout << setw(3) << "SUM" << setw(10) << "TOTAL" << setw(10) << "EXPECTED" << setw(10) << "ACTUAL" << endl; 
     for (int i = 0; i < SIZE; i++)
     {
-        cout << setw(3) << diceSum[i] << setw(10) << diceRolls[i] << endl;
+        cout << setw(3) << diceSum[i] << setw(10) << diceRolls[i] << setw(10) << expectedChance[i] << setw(10) << actualChance[i] << endl;
         
     }
    
@@ -87,5 +94,14 @@ void findTotalRolls(int dice1, int dice2, int arrayName[])
         default:
             break;
         }
+    }
+};
+
+void findActualChance(double arrayName[], double arrayName2[])
+{
+    //actual chance = desired outcome/ probable outcome
+    for (int i = 0; i < SIZE ; i++)
+    {
+        arrayName[i] = (arrayName2[i] / 36) * 100;
     }
 };
