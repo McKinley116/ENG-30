@@ -18,13 +18,13 @@ int main()
     int diceRolls[SIZE] = {0};
     double expectedChance[SIZE] = {0.0};
     double actualChance[SIZE] = {0.0};
-    int expectedSum[SIZE] = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1}; // total number of ways each sum is possbile
+    int possible[SIZE] = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1}; // total number of ways each sum is possbile
     int dice1, dice2;
 
     cout << setprecision(3) << fixed;
 
     findTotalRolls(dice1, dice2, diceRolls);
-    findExpectedChance(expectedChance, expectedSum);
+    findExpectedChance(expectedChance, possible);
     findActualChance(actualChance, diceRolls);
 
     cout << setw(3) << "SUM" << setw(10) << "TOTAL" << setw(10) << "EXPECTED" << setw(10) << "ACTUAL" << endl; 
@@ -40,7 +40,7 @@ int main()
 //Functions
 void findTotalRolls(int dice1, int dice2, int arrayName[])
 {
-    srand(time(NULL));
+    srand(time(NULL)); // sets seed to users date and time to always randomize the numbers. 
     int sum = 0;
     for (int i = 0; i <= ROLLS; i ++)
     {
